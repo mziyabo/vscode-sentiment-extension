@@ -30,6 +30,26 @@
         "command": "extension.analyze",
         "title": "Perform sentiment analysis"
       }
+    ],
+    "colors": [
+      {
+        "id": "codesentiment.NegativeSentiment",
+        "description": "Background decoration color for large numbers",
+        "defaults": {
+          "dark": "#FF000055",
+          "light": "#FF000055",
+          "highContrast": "#FF000055"
+        }
+      },
+      {
+        "id": "codesentiment.PositiveSentiment",
+        "description": "Background decoration color for large numbers",
+        "defaults": {
+          "dark": "#73ff002f",
+          "light": "#73ff002f",
+          "highContrast": "#73ff002f"
+        }
+      }
     ]
   }
 }
