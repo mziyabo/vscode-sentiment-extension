@@ -1,68 +1,95 @@
 import * as vscode from 'vscode';
 
 let Sentiment = require("sentiment");
-let AWS = require("aws-sdk");
+let timeout: NodeJS.Timer | undefined = undefined;
+let collection;
 
 export function activate(context: vscode.ExtensionContext) {
-    let disposable = vscode.commands.registerCommand('extension.analyze', () => {
+    let activeEditor = vscode.window.activeTextEditor;
 
-        console.log("vscode-sentiment loaded");
-        //TODO: clear previous decorations
-        //Get text and analyze
-        AnalyzeWithSentiment();
+    let disposable = vscode.commands.registerCommand('extension.analyze', () => {
+        collection = vscode.languages.createDiagnosticCollection("Negative Sentiments");
+
+        if (activeEditor) {
+            console.log("vscode-sentiment loaded");
+
+            //Get activeTextEditor and analyze text
+            TriggerAnalyzeSentiment(collection);
+        }
     });
 
-    let activeEditor = vscode.window.activeTextEditor;
     vscode.workspace.onDidChangeTextDocument(event => {
         if (activeEditor && event.document === activeEditor.document) {
-            AnalyzeWithSentiment();
+            TriggerAnalyzeSentiment(collection);
         }
     }, null, context.subscriptions);
+
+    vscode.window.onDidChangeActiveTextEditor(editor => {
+        activeEditor = editor;
+        if (editor) {
+            TriggerAnalyzeSentiment(collection);
+        }
+    }, null, context.subscriptions);
+
+    function AnalyzeSentiment(collection) {
+
+        // Perform Sentiment Analysis
+        let sentiment = new Sentiment({});
+        let options = {
+            language: "en",
+            extras: null
+        };
+
+        if (vscode.window.activeTextEditor != null) {
+            let text = vscode.window.activeTextEditor.document.getText();
+
+            // TODO: analyze each sentence here
+            let result = sentiment.analyze(text);
+            vscode.window.setStatusBarMessage(`Sentiment: ${result.score}`);
+
+            let diagnostics = [];
+
+            result.negative.forEach(negative => {
+                let match;
+                const pattern = new RegExp(negative, "g");
+                while (match = pattern.exec(text)) {
+
+                    const startPos = activeEditor.document.positionAt(match.index);
+                    const endPos = activeEditor.document.positionAt(match.index + match[0].length);
+
+                    let selection = new vscode.Range(startPos, endPos);
+                    let diagnostic = new vscode.Diagnostic(selection, `Found negative sentiment: '${negative}'`, vscode.DiagnosticSeverity.Error);
+
+                    //TODO: Don't push diagnostic message if already pushed
+                    diagnostics.push(diagnostic);
+
+                }
+            });
+
+            // Push sentiment diagnostic message
+            collection.set(vscode.window.activeTextEditor.document.uri, diagnostics);
+        };
+
+    }
+
+    function TriggerAnalyzeSentiment(collection) {
+        if (timeout) {
+            clearTimeout(timeout);
+            timeout = undefined;
+        }
+
+        collection.set(vscode.window.activeTextEditor.document.uri, undefined);
+        timeout = setTimeout(AnalyzeSentiment, 500, collection);
+    }
 
     context.subscriptions.push(disposable);
 }
 
-// this method is called when your extension is deactivated
-export function deactivate() {
-}
-
-function AnalyzeWithSentiment() {
-
-    // Perform Sentiment Analysis
-    let sentiment = new Sentiment({});
-    let options = {
-        language: "en",
-        extras: null
-    };
-
-    let line = 0;
-    let score = 0;
-    if (vscode.window.activeTextEditor != null) {
-        let text = vscode.window.activeTextEditor.document.getText();
-        let sentences = text.split("\n");
-
-        sentences.forEach(sentence => {
-            // TODO: analyze each sentence here
-            let result = sentiment.analyze(sentence);
-            score += result.score;    // Score: -2, Comparative: -0.666
-
-            var selection = vscode.window.activeTextEditor.document.lineAt(line).range;
-            Decorate(score, selection);
-
-            line += 1;
-        });
-
-        vscode.window.setStatusBarMessage(`Sentiment: ${score}`);
-    }
-}
-
 function Decorate(score, selection) {
 
-    // TODO: Create sentiment/s
+    //TODO: Clear previous decorations
     const negativeSentimentDecorator = vscode.window.createTextEditorDecorationType({
-
         backgroundColor: { id: 'codesentiment.NegativeSentiment' }
-
     });
 
     const positiveSentimentDecorator = vscode.window.createTextEditorDecorationType({
@@ -71,37 +98,17 @@ function Decorate(score, selection) {
 
     let selections = [selection];
     if (score < 0) {
-        // Negative sentence
-        // Extremely negative
-        //if (score < -3) {
-        // Decorate
+        // Negative sentiment
         vscode.window.activeTextEditor.setDecorations(negativeSentimentDecorator, selections);
-        //}
-
     }
     else if (score > 1) {
-        // Positive sentence
-        // Very Positive
-        // if (score > 3) {
+        // Positive sentiment
         vscode.window.activeTextEditor.setDecorations(positiveSentimentDecorator, selections);
-        // }
     }
 }
 
-function AnalyzeWithComprehend() {
-
-    AWS.config.region = "eu-west-1";
-
-    let comprehend = new AWS.Comprehend();
-    let params = {
-        LanguageCode: "en",  /*| es | fr | de | it | pt, required */
-        TextList: [ /* required */
-            'you can\'t tell me anything because you don\'t know a lot',
-            /* more items */
-        ]
-    };
-    comprehend.batchDetectSentiment(params, function (err, data) {
-        if (err) console.log(err, err.stack); // an error occurred
-        else console.log(data);           // successful response
-    });
+// this method is called when your extension is deactivated
+export function deactivate() {
 }
+
+exports.activate = activate;
