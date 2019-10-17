@@ -4,4 +4,4 @@ Visual Studio Code extension project to perform an analysis on text. Uses the [n
 
 ## License
 
-The **vscode sentiment extension** is distributed under the [Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0).
+The **vscode sentiment extension** is distributed under the [Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0).`
