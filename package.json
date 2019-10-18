@@ -3,6 +3,14 @@
   "version": "0.0.1",
   "description": "vscode sentiment analysis",
   "main": "./out/extension.js",
+  "publisher": "mziyabo",
+  "author": {
+    "name": "mziyabo",
+    "email": "mziyabo@live.com"
+  },
+  "repository": {
+    "url": "https://github.com/mziyabo/vscode-sentiment-extension"
+  },
   "scripts": {
     "vscode:prepublish": "npm run compile",
     "compile": "tsc -p ./",
@@ -13,9 +21,10 @@
   "dependencies": {
     "@types/node": "^12.7.3",
     "@types/vscode": "^1.37.0",
-    "aws-sdk": "^2.521.0",
     "sentiment": "^5.0.2",
-    "typescript": "^3.6.2",
+    "typescript": "^3.6.2"
+  },
+  "devDependencies": {
     "vscode": "^1.1.36"
   },
   "activationEvents": [
