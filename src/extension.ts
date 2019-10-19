@@ -1,25 +1,20 @@
 import * as vscode from 'vscode';
-import { TriggerAnalyzeSentiment, AnalyzeSentiment } from "./sentiment"
+import { AnalyzeSentiment } from "./sentiment"
 
-let collection;
+let collection = vscode.languages.createDiagnosticCollection("Negative Sentiments");;
 
 export function activate(context: vscode.ExtensionContext) {
 
     let activeEditor = vscode.window.activeTextEditor;
 
     let disposable = vscode.commands.registerCommand('extension.analyze', () => {
-        collection = vscode.languages.createDiagnosticCollection("Negative Sentiments");
-
         if (activeEditor) {
-            console.log("vscode-sentiment loaded");
-
-            // Get activeTextEditor and analyze text
-            TriggerAnalyzeSentiment(collection);
+            AnalyzeSentiment(collection);
         }
     });
 
     vscode.workspace.onDidChangeTextDocument(event => {
-        if (activeEditor && event.document === activeEditor.document) {
+        if (activeEditor && event.document == activeEditor.document) {
             AnalyzeSentiment(collection);
         }
     }, null, context.subscriptions);
@@ -35,4 +30,5 @@ export function activate(context: vscode.ExtensionContext) {
 }
 
 export function deactivate() {
+    collection.delete(vscode.window.activeTextEditor.document.uri);
 }

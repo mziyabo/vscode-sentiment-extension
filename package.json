@@ -28,8 +28,8 @@
     "vscode": "^1.1.36"
   },
   "activationEvents": [
-    "onCommand:extension.analyze",
-    "onLanguage:markdown"
+    "onLanguage:markdown",
+    "onLanguage:plaintext"
   ],
   "engines": {
     "vscode": "^1.22.0"
@@ -38,27 +38,7 @@
     "commands": [
       {
         "command": "extension.analyze",
-        "title": "Perform sentiment analysis"
-      }
-    ],
-    "colors": [
-      {
-        "id": "codesentiment.NegativeSentiment",
-        "description": "Background decoration color for large numbers",
-        "defaults": {
-          "dark": "#FF000055",
-          "light": "#FF000055",
-          "highContrast": "#FF000055"
-        }
-      },
-      {
-        "id": "codesentiment.PositiveSentiment",
-        "description": "Background decoration color for large numbers",
-        "defaults": {
-          "dark": "#73ff002f",
-          "light": "#73ff002f",
-          "highContrast": "#73ff002f"
-        }
+        "title": "Sentiment: perform sentiment analysis"
       }
     ]
   }
