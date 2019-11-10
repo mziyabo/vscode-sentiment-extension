@@ -19,13 +19,13 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "@types/node": "^12.7.3",
-    "@types/vscode": "^1.37.0",
     "sentiment": "^5.0.2",
-    "typescript": "^3.6.2"
+    "vscode": "^1.1.36"
   },
   "devDependencies": {
-    "vscode": "^1.1.36"
+    "@types/node": "^12.7.3",
+    "@types/vscode": "^1.37.0",
+    "typescript": "^3.6.2"
   },
   "activationEvents": [
     "onLanguage:markdown",

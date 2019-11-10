@@ -7,7 +7,7 @@ Visual Studio Code extension project to perform sentiment analysis on text. Uses
 - Negative words in the AFINN list are underlined with a warning squiggly and also noted in the `Problems` tab. 
 - Overall sentiment of the document (plaintext/markdown) is displayed in the status bar:
 
-![Overview](./resources/marketplace/vscode-sentiment-feature.PNG)
+![Feature Overview](./resources/marketplace/vscode-sentiment.mp4)
 
 ## Command Palette
 - `Sentiment: perform sentiment analysis` : to analyze manually.
