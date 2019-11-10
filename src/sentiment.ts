@@ -31,7 +31,7 @@ export function AnalyzeSentiment(collection) {
                     const endPos = activeEditor.document.positionAt(match.index + match[0].length);
 
                     let selection = new vscode.Range(startPos, endPos);
-                    let diagnostic = new vscode.Diagnostic(selection, `Found negative sentiment: '${negative}'`, vscode.DiagnosticSeverity.Error);
+                    let diagnostic = new vscode.Diagnostic(selection, `Found negative sentiment: '${negative}'`, vscode.DiagnosticSeverity.Warning);
 
                     diagnostics.push(diagnostic);
                 }

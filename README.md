@@ -18,4 +18,4 @@ This extension is still a work in progress.
 
 ### Licence:
 
-This extension released under the [Apache 2.0 License](https://www.apache.org/licenses/LICENSE-2.0)
+This extension is released under the [Apache 2.0 License](https://www.apache.org/licenses/LICENSE-2.0)
