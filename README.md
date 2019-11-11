@@ -1,5 +1,6 @@
 # vscode sentiment extension
-
+ [![Marketplace Version](https://img.shields.io/vscode-marketplace/v/mziyabo.vscode-sentiment.svg) ![Marketplace Downloads](https://img.shields.io/vscode-marketplace/d/mziyabo.vscode-sentiment.svg)](https://marketplace.visualstudio.com/items?itemName=mziyabo.vscode-sentiment) 
+ 
 Visual Studio Code extension project to perform sentiment analysis on text. Uses the [npm sentiment library](https://www.npmjs.com/package/sentiment) to analyze sentiment based on the [AFINN](http://www2.imm.dtu.dk/pubdb/views/edoc_download.php/6006/pdf/imm6006.pdf) word list.
 
 ## Features:
