@@ -38,7 +38,8 @@
     "commands": [
       {
         "command": "extension.analyze",
-        "title": "Sentiment: perform sentiment analysis"
+        "title": "Perform sentiment analysis",
+        "category": "Sentiment"
       }
     ]
   }
