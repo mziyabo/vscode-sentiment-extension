@@ -1,6 +1,6 @@
 {
   "name": "vscode-sentiment",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "vscode sentiment analysis",
   "main": "./out/extension.js",
   "publisher": "mziyabo",
@@ -11,6 +11,7 @@
   "repository": {
     "url": "https://github.com/mziyabo/vscode-sentiment-extension"
   },
+  "license": "LICENSE",
   "scripts": {
     "vscode:prepublish": "npm run compile",
     "compile": "tsc -p ./",
@@ -23,16 +24,18 @@
     "vscode": "^1.1.36"
   },
   "devDependencies": {
-    "@types/node": "^12.7.3",
-    "@types/vscode": "^1.37.0",
-    "typescript": "^3.6.2"
+    "@types/node": "^12.12.34",
+    "@types/vscode": "^1.43.0",
+    "gulp": "^4.0.2",
+    "gulp-typescript": "^6.0.0-alpha.1",
+    "typescript": "^3.8.3"
   },
   "activationEvents": [
     "onLanguage:markdown",
     "onLanguage:plaintext"
   ],
   "engines": {
-    "vscode": "^1.22.0"
+    "vscode": "^1.40.0"
   },
   "contributes": {
     "commands": [
